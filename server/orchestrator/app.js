@@ -1,18 +1,29 @@
-require('dotenv').config();
-const express = require('express');
-// const axios = require('axios');
-// const Redis = require('ioredis');
-// const redis = new Redis();
-const app = express ();
-const PORT = process.env.PORT || 3000;
-const cors = require('cors');
-const router = require('./routes');
+const { ApolloServer, gql, makeExecutableSchema } = require("apollo-server")
+const movieSchema = require("./schema/movieSchema")
+const tvSerieSchema = require("./schema/tvSerieSchema")
 
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({extended:true}));
-app.use(router);
 
-app.listen(PORT, ()=>{
-  console.log(`app run on PORT:${PORT}`);
+const typeDefs = gql`
+  type Query
+  type Mutation
+`;
+
+const schema = makeExecutableSchema({
+  typeDefs : [
+    typeDefs,
+    movieSchema.typeDefs,
+    tvSerieSchema.typeDefs
+  ],
+  resolvers : [
+    movieSchema.resolvers,
+    tvSerieSchema.resolvers
+  ]
 })
+
+const server = new ApolloServer({
+  schema
+})
+
+server.listen().then(({ url }) => {
+  console.log(` Server ready at ${url}`);
+});

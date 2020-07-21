@@ -13,32 +13,30 @@ const typeDefs = gql`
     tags: [String]
   }
 
+  input InputTvSerie {
+    title: String,
+    overview: String,
+    poster_path: String,
+    popularity: Float,
+    tags: [String]
+  }
+
   extend type Query {
-    tvSeries : [TvSerie]
-    tvSerie(id: ID) : TvSerie
+    getTvSeries : [TvSerie]
+    getTvSerie (id: ID) : TvSerie
   }
 
   extend type Mutation {
-    addTvSerie (
-      title: String
-      overview: String
-      poster_path: String
-      popularity: Float
-      tags: [String]
-    ) : TvSerie
+    addTvSerie (newTvSerie: InputTvSerie) : TvSerie
 
     updateTvSerie (
-      id: ID
-      title: String
-      overview: String
-      poster_path: String
-      popularity: Float
-      tags: [String]
+      id: ID,
+      newTvSerie: InputTvSerie
     ) : TvSerie
 
     deleteTvSerie (
       id: ID
-    ) : Int
+    ) : String
   }
 `;
 
@@ -59,7 +57,7 @@ const resolvers = {
         }
       }
     },
-    tvSerie : (parent, args, context, info) => {
+    movie : (parent, args, context, info) => {
       const id = args.id
       return axios({
         url : `http://localhost:3002/tv/${id}`,
@@ -74,7 +72,7 @@ const resolvers = {
 
   Mutation: {
     addTvSerie : (parent, args, context, info) => {
-      const { title, overview, poster_path, popularity, tags } = args;
+      const { title, overview, poster_path, popularity, tags } = args.newTvSerie;
       return axios.post(`http://localhost:3002/tv`, { 
         title, overview, poster_path, popularity, tags
       })
@@ -86,7 +84,8 @@ const resolvers = {
     },
 
     updateTvSerie : (parent, args, context, info) => {
-      const { id, title, overview, poster_path, popularity, tags } = args;
+      const id = args.id
+      const { title, overview, poster_path, popularity, tags } = args.newTvSerie;
       return axios.put(`http://localhost:3002/tv/${id}`, { 
         title, overview, poster_path, popularity, tags
       })
@@ -98,7 +97,7 @@ const resolvers = {
     },
 
     deleteTvSerie : (parent, args, context, info) => {
-      const { id } = args;
+      const id = args.id;
       return axios.delete(`http://localhost:3002/tv/${id}`)
       .then(({ data }) => {
         redis.del('tvSeries');

@@ -22,20 +22,16 @@ const typeDefs = gql`
   }
 
   extend type Query {
-    movies : [Movie]
-    movie(id: ID) : Movie
+    getMovies : [Movie]
+    getMovie (id: ID) : Movie
   }
 
   extend type Mutation {
     addMovie (newMovie: InputMovie) : Movie
 
     updateMovie (
-      id: ID
-      title: String
-      overview: String
-      poster_path: String
-      popularity: Float
-      tags: [String]
+      id: ID,
+      newMovie: InputMovie
     ) : Movie
 
     deleteMovie (
@@ -88,7 +84,8 @@ const resolvers = {
     },
 
     updateMovie : (parent, args, context, info) => {
-      const { id, title, overview, poster_path, popularity, tags } = args;
+      const id = args.id
+      const { title, overview, poster_path, popularity, tags } = args.newMovie;
       return axios.put(`http://localhost:3001/movies/${id}`, { 
         title, overview, poster_path, popularity, tags
       })
@@ -100,7 +97,7 @@ const resolvers = {
     },
 
     deleteMovie : (parent, args, context, info) => {
-      const { id } = args;
+      const id = args.id;
       return axios.delete(`http://localhost:3001/movies/${id}`)
       .then(({ data }) => {
         redis.del('movies');

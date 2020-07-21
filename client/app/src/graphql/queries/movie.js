@@ -41,7 +41,7 @@ export const ADD_MOVIE = gql`
 
 export const UPDATE_MOVIE = gql`
   mutation ($id: ID, $newMovie: InputMovie) {
-    addMovie(id: $id, newMovie: $newMovie) {
+    updateMovie(id: $id, newMovie: $newMovie) {
       _id
       title
       overview

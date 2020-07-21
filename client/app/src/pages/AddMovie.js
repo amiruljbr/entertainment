@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/client';
 import { ADD_MOVIE } from '../graphql/queries/movie';
 import { useHistory } from 'react-router-dom';
 
-export default function AddMovie() {
+export default function AddMoviePage () {
   const history = useHistory();
   const [addMovie] = useMutation(ADD_MOVIE);
   const [input, setInput] = useState({
@@ -62,7 +62,7 @@ export default function AddMovie() {
         </div>
         <div className="form-group">
           <label>tags:</label>
-          <input value={input.price} name="tags" type="text" className="form-control" placeholder="Enter tags" required onChange={onChange}/>
+          <input value={input.tags} name="tags" type="text" className="form-control" placeholder="Enter tags" required onChange={onChange}/>
         </div>
         <button type="submit" className="btn btn-primary">Submit</button>
       </form>

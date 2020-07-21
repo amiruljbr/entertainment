@@ -41,7 +41,7 @@ export const ADD_TVSERIE = gql`
 
 export const UPDATE_TVSERIE = gql`
   mutation ($id: ID, $newTvSerie: InputTvSerie) {
-    addTvSerie(id: $id, newTvSerie: $newTvSerie) {
+    updateTvSerie(id: $id, newTvSerie: $newTvSerie) {
       _id
       title
       overview

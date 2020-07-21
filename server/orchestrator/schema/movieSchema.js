@@ -101,7 +101,7 @@ const resolvers = {
       return axios.delete(`http://localhost:3001/movies/${id}`)
       .then(({ data }) => {
         redis.del('movies');
-        return data;
+        return data.message;
       })
       .catch(console.log)
     }

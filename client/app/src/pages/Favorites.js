@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/client';
 import { GET_MOVIES } from '../graphql/queries/movie'
 import CardMovie from '../components/CardMovie'
 
-export default function Movies() {
+export default function Favorites() {
   const { loading, error, data: movies } = useQuery(GET_MOVIES)
   if (loading) {
     return (
@@ -14,7 +14,7 @@ export default function Movies() {
   };
   return (
     <div className="container">
-      <h1>All Movies</h1>
+      <h1>List Favorites: </h1>
       {/* {JSON.stringify(movies.getMovies)} */}
       <div className="card-columns">
         {movies.getMovies.map((movie)=>{

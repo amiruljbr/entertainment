@@ -1,16 +1,29 @@
-import React, { useState } from 'react';
-import { useMutation } from '@apollo/client';
-import { AddMovie } from '../graphql/queries/movie';
+import React, { useState, useEffect } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
+import { useQuery, useMutation } from '@apollo/client';
+import { GET_MOVIE, UPDATE_MOVIE } from '../graphql/queries/movie'
 
-export default function AddMovie() {
-  const [addMovie] = useMutation(ADD_MOVIE);
+export default function EditMovie () {
+  const { id } = useParams();
+  const history = useHistory();
+  const [updateMovie] = useMutation(UPDATE_MOVIE);
+  const { loading, error, data } = useQuery(GET_MOVIE, { variables: { id }});
   const [input, setInput] = useState({
     title: '',
     overview: '',
     poster_path: '',
     popularity: '',
-    tags: ''
+    tags: []
   })
+
+  useEffect(() => {
+    if (!loading) {
+      let movie = { ...data.getMovie };
+      delete movie._id;
+      delete movie.__typename;
+      setInput(movie);
+    }
+  }, [loading, data]);
 
   function onChange(event) {
     const name = event.target.name;
@@ -24,22 +37,25 @@ export default function AddMovie() {
 
   function onSubmit(event) {
     event.preventDefault();
-    addMovie({
+    updateMovie({
       variables: {
+        id: id,
         newMovie: {
           title: input.title,
           overview: input.overview, 
           poster_path: input.poster_path, 
           popularity: parseFloat(input.popularity), 
-          tags: input.tags.split(',')
+          tags: input.tags
         }
       }
     })
+    history.push('/movies')
   }
 
   return (
     <div className="container">
-      <h1>Add New Movie</h1>
+      <h1>Edit Movie</h1>
+      {JSON.stringify(data)}
       <form onSubmit={onSubmit}>
         <div className="form-group">
           <label>title:</label>
@@ -59,9 +75,9 @@ export default function AddMovie() {
         </div>
         <div className="form-group">
           <label>tags:</label>
-          <input value={input.price} name="tags" type="text" className="form-control" placeholder="Enter tags" required onChange={onChange}/>
+          <input value={input.tags} name="tags" type="text" className="form-control" placeholder="Enter tags" required onChange={onChange}/>
         </div>
-        <button type="submit" className="btn btn-primary">Submit</button>
+        <button type="submit" className="btn btn-primary">Update</button>
       </form>
     </div>
   )

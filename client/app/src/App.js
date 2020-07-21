@@ -14,6 +14,7 @@ import client from './graphql/config.js';
 import AddMovie from './pages/AddMovie';
 import DetailMovie from './pages/DetailMovie';
 import EditMovie from './pages/EditMovie';
+import Favorites from './pages/Favorites';
 
 function App() {
   return (
@@ -33,6 +34,9 @@ function App() {
                 <li className="nav-item mr-1 ml-1">
                   <Link to="/tv">TV Series</Link>
                 </li>
+                <li className="nav-item mr-1 ml-1">
+                  <Link to="/favorites">Favorites</Link>
+                </li>
                 {/* <li className="nav-item mr-1 ml-1">
                   <Link to="/cart">Cart</Link>
                 </li> */}
@@ -43,27 +47,24 @@ function App() {
             <Route exact path="/">
               <Home />
             </Route>
-            <Route path="/movies">
+            <Route exact path="/movies">
               <Movies />
             </Route>
-            <Route path="/add">
+            <Route exact path="/movies/add">
               <AddMovie />
             </Route>
-            <Route path="/tv">
+            <Route exact path="/tv">
               <TvSeries />
             </Route>
-            <Route path="/edit/:id">
+            <Route exact path="/movies/:id/edit">
               <EditMovie />
             </Route>
-            <Route path="/detail/:id">
+            <Route exact path="/movies/:id">
               <DetailMovie />
             </Route>
-            {/* <Route path="/add">
-              <AddBook />
+            <Route exact path="/favorites">
+              <Favorites />
             </Route>
-            <Route path="/book/:bookId">
-              <Detail />
-            </Route> */}
           </Switch>
         </div>
       </Router>

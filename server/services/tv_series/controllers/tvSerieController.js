@@ -23,7 +23,6 @@ class TvSerieController {
 
   static create(req,res) {
     req.body.popularity = Number(req.body.popularity);
-    req.body.tags = req.body.tags.split(',')
     const newTvSerie = req.body;
     TvSerie.create(newTvSerie)
     .then(data=>{
@@ -53,7 +52,6 @@ class TvSerieController {
 
   static findByIdAndUpdate(req,res) {
     req.body.popularity = Number(req.body.popularity);
-    req.body.tags = req.body.tags.split(',')
     const newTvSerie = req.body;
 
     TvSerie.findById(req.params.id)

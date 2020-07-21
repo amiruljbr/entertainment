@@ -13,19 +13,21 @@ const typeDefs = gql`
     tags: [String]
   }
 
+  input InputMovie {
+    title: String,
+    overview: String,
+    poster_path: String,
+    popularity: Float,
+    tags: [String]
+  }
+
   extend type Query {
     movies : [Movie]
     movie(id: ID) : Movie
   }
 
   extend type Mutation {
-    addMovie (
-      title: String
-      overview: String
-      poster_path: String
-      popularity: Float
-      tags: [String]
-    ) : Movie
+    addMovie (newMovie: InputMovie) : Movie
 
     updateMovie (
       id: ID
@@ -74,7 +76,7 @@ const resolvers = {
 
   Mutation: {
     addMovie : (parent, args, context, info) => {
-      const { title, overview, poster_path, popularity, tags } = args;
+      const { title, overview, poster_path, popularity, tags } = args.newMovie;
       return axios.post(`http://localhost:3001/movies`, { 
         title, overview, poster_path, popularity, tags
       })

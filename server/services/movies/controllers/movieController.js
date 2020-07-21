@@ -23,7 +23,6 @@ class MovieController {
 
   static create(req,res) {
     req.body.popularity = Number(req.body.popularity);
-    req.body.tags = req.body.tags.split(',')
     const newMovie = req.body;
     Movie.create(newMovie)
     .then(data=>{
@@ -53,7 +52,6 @@ class MovieController {
 
   static findByIdAndUpdate(req,res) {
     req.body.popularity = Number(req.body.popularity);
-    req.body.tags = req.body.tags.split(',')
     const newMovie = req.body;
 
     Movie.findById(req.params.id)

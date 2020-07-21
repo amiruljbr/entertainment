@@ -43,7 +43,7 @@ const typeDefs = gql`
 
 const resolvers = {
   Query : {
-    tvSeries : async() => {
+    getTvSeries : async() => {
       const tvSeries = await redis.get('tvSeries');
       if (tvSeries) {
         return JSON.parse(tvSeries);
@@ -57,7 +57,7 @@ const resolvers = {
         }
       }
     },
-    movie : (parent, args, context, info) => {
+    getTvSerie : (parent, args, context, info) => {
       const id = args.id
       return axios({
         url : `http://localhost:3002/tv/${id}`,

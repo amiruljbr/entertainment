@@ -43,7 +43,7 @@ const typeDefs = gql`
 
 const resolvers = {
   Query : {
-    movies : async() => {
+    getMovies : async() => {
       const movies = await redis.get('movies');
       if (movies) {
         return JSON.parse(movies);
@@ -57,7 +57,7 @@ const resolvers = {
         }
       }
     },
-    movie : (parent, args, context, info) => {
+    getMovie : (parent, args, context, info) => {
       const id = args.id
       return axios({
         url : `http://localhost:3001/movies/${id}`,

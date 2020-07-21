@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { ADD_MOVIE } from '../graphql/queries/movie';
-import { useHistory } from 'react-router-dom';
+import { AddMovie } from '../graphql/queries/movie';
 
 export default function AddMovie() {
-  const history = useHistory();
   const [addMovie] = useMutation(ADD_MOVIE);
   const [input, setInput] = useState({
     title: '',
@@ -37,7 +35,6 @@ export default function AddMovie() {
         }
       }
     })
-    history.push('/movies')
   }
 
   return (

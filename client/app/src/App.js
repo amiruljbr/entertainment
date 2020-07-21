@@ -10,8 +10,10 @@ import Home from './pages/Home.js';
 import Movies from './pages/Movies.js';
 import TvSeries from './pages/TvSeries.js';
 import { ApolloProvider } from '@apollo/client';
-import client from './config/graphql.js';
+import client from './graphql/config.js';
 import AddMovie from './pages/AddMovie';
+import DetailMovie from './pages/DetailMovie';
+import EditMovie from './pages/EditMovie';
 
 function App() {
   return (
@@ -49,6 +51,12 @@ function App() {
             </Route>
             <Route path="/tv">
               <TvSeries />
+            </Route>
+            <Route path="/edit/:id">
+              <EditMovie />
+            </Route>
+            <Route path="/detail/:id">
+              <DetailMovie />
             </Route>
             {/* <Route path="/add">
               <AddBook />

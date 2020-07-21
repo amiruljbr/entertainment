@@ -1,18 +1,6 @@
 import React from 'react';
-import { gql, useQuery } from '@apollo/client';
-
-const GET_MOVIES = gql`
-  query {
-    movies {
-      _id
-      title
-      overview
-      poster_path
-      popularity
-      tags
-    }
-  }
-`;
+import { useQuery } from '@apollo/client';
+import { GET_MOVIES } from '../graphql/queries/movie'
 
 export default function Home() {
   const { loading, error, data: movies } = useQuery(GET_MOVIES)

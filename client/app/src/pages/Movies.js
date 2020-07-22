@@ -14,6 +14,13 @@ export default function Movies() {
       </div>
     );
   };
+  if (error) {
+    return (
+      <div>
+        Error ...
+      </div>
+    );
+  };
   return (
     <div className="container">
       <h1>All Movies</h1>

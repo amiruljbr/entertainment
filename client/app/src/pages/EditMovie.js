@@ -16,6 +16,8 @@ export default function EditMovie () {
     tags: []
   })
 
+  
+
   useEffect(() => {
     if (!loading) {
       let movie = { ...data.getMovie };
@@ -24,6 +26,14 @@ export default function EditMovie () {
       setInput(movie);
     }
   }, [loading, data]);
+
+  if (error) {
+    return (
+      <div>
+        Error ...
+      </div>
+    );
+  };
 
   function onChange(event) {
     const name = event.target.name;
@@ -45,7 +55,7 @@ export default function EditMovie () {
           overview: input.overview, 
           poster_path: input.poster_path, 
           popularity: parseFloat(input.popularity), 
-          tags: input.tags
+          tags: input.tags.split(',')
         }
       }
     })

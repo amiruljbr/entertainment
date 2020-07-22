@@ -1,11 +1,10 @@
-import React, { useState,useEffect } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import { DELETE_MOVIE, GET_MOVIES } from '../graphql/queries/movie';
 import { GET_FAVORITES, fav } from '../graphql/queries/favorite';
 
 function CardMovie (props) {
-  const [checkFav, setCheckFav] = useState(true);
   const history = useHistory();
   const [deleteMovie] = useMutation(DELETE_MOVIE, { refetchQueries: [{ query: GET_MOVIES }]});
   const { loading, data } = useQuery(GET_FAVORITES);
@@ -16,12 +15,6 @@ function CardMovie (props) {
       </div>
     );
   };
-  // useEffect(() => {
-  //   let found = favorites.findIndex(movie => {
-  //       return movie.CountryCode === props.movie.CountryCode;
-  //   });
-  //   setCheckFav(found > -1);
-  // }, [favorites, props.movie.CountryCode])
 
   function onClick(id){
     history.push(`/movies/${id}`)
@@ -45,10 +38,6 @@ function CardMovie (props) {
     fav([...favorites, movie])
   }
 
-  function removeFromFavorites(movie) {
-    console.log(`remove ${movie.title} from favorites`);
-  }
-
   return (
     <>
       <div className="card">
@@ -57,11 +46,16 @@ function CardMovie (props) {
           <h5 className="card-title">{props.movie.title}</h5>
           <p className="card-text">Overview : {props.movie.overview}</p>
           <p className="card-text">Popularity: {props.movie.popularity}</p>
-          <p className="card-text">Tags: {props.movie.tags}</p>
+          <p className="card-text">Tags: {props.movie.tags.map((tag)=>{
+            return (
+              <button className="btn btn-secondary mr-1 ml-1 mt-1 mb-1">{tag}</button>
+            )
+          })}</p>
+          <hr/>
           <button onClick={() => onClick(props.movie._id)} className="button btn-primary mr-1 ml-1 mt-1 mb-1">View Detail</button>
           <button onClick={() => onClickEdit(props.movie._id)} className="button btn-secondary mr-1 ml-1 mt-1 mb-1">Edit</button>
           <button onClick={() => onClickDelete(props.movie._id)} className="button btn-danger mr-1 ml-1 mt-1 mb-1">Delete</button>
-          {checkFav? <button onClick={() => addToFavorites(props.movie)} className="button btn-success mr-1 ml-1 mt-1 mb-1">Add To Favorites</button>: <button onClick={() => removeFromFavorites(props.movie)} className="button btn-danger mr-1 ml-1">Remove From Favorites</button> }          
+          {<button onClick={() => addToFavorites(props.movie)} className="button btn-success mr-1 ml-1 mt-1 mb-1">Add To Favorites</button>}          
         </div>
       </div>
     </>

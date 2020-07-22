@@ -12,6 +12,13 @@ export default function Favorites() {
       </div>
     );
   };
+  if (error) {
+    return (
+      <div>
+        Error ...
+      </div>
+    );
+  };
   return (
     <div className="container">
       <h1>List Favorites: </h1>

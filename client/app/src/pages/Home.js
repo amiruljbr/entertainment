@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useQuery } from '@apollo/client';
 import { GET_TVSERIES } from '../graphql/queries/tvSerie'
 import { GET_MOVIES } from '../graphql/queries/movie'
@@ -13,6 +13,14 @@ export default function Home() {
     return (
       <div>
         Loading ...
+      </div>
+    );
+  };
+
+  if (errorMovie || errorTv) {
+    return (
+      <div>
+        Error ...
       </div>
     );
   };

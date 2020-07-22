@@ -1,8 +1,6 @@
-import React, { useState,useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import React from 'react';
 
 function CardTvSerie (props) {
-  const history = useHistory();
 
   return (
     <>
@@ -12,7 +10,11 @@ function CardTvSerie (props) {
           <h5 className="card-title">{props.tvSerie.title}</h5>
           <p className="card-text">Overview : {props.tvSerie.overview}</p>
           <p className="card-text">Popularity: {props.tvSerie.popularity}</p>
-          <p className="card-text">Tags: {props.tvSerie.tags}</p>
+          <p className="card-text">Tags: {props.tvSerie.tags.map((tag)=>{
+            return (
+              <button className="btn btn-secondary mr-1 ml-1 mt-1 mb-1">{tag}</button>
+            )
+          })}</p>
         </div>
       </div>
     </>

@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useQuery, useMutation } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { GET_MOVIE } from '../graphql/queries/movie'
 
 export default function DetailMovie() {
@@ -15,6 +15,14 @@ export default function DetailMovie() {
     );
   };
 
+  if (error) {
+    return (
+      <div>
+        Error ...
+      </div>
+    );
+  };
+
   return (
     <div className="container">
       <div className="card">
@@ -23,7 +31,11 @@ export default function DetailMovie() {
           <h5 className="card-title">{data.getMovie.title}</h5>
           <p className="card-text">overview: {data.getMovie.overview}</p>
           <p className="card-text">popularity: {data.getMovie.popularity}</p>
-          <p className="card-text">tags:  {JSON.stringify(data.getMovie.tags)}</p>            
+          <p className="card-text">Tags: {data.getMovie.tags.map((tag)=>{
+            return (
+              <button className="btn btn-secondary mr-1 ml-1 mt-1 mb-1">{tag}</button>
+            )
+          })}</p>        
         </div>
       </div>
     </div>

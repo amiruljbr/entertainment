@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_TVSERIES } from '../graphql/queries/tvSerie'
 import CardTvSerie from '../components/CardTvSerie';
@@ -12,12 +12,13 @@ export default function TvSeries() {
       </div>
     );
   };
-
-  if (!loading) {
-    console.log(tvSeries)
+  if (error) {
+    return (
+      <div>
+        Error ...
+      </div>
+    );
   };
-
-
 
   return (
     <div className="container">

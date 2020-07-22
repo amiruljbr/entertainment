@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
-import { GET_MOVIE, UPDATE_MOVIE } from '../graphql/queries/movie'
+import { GET_MOVIE, UPDATE_MOVIE, GET_MOVIES } from '../graphql/queries/movie'
 
 export default function EditMovie () {
   const { id } = useParams();
   const history = useHistory();
-  const [updateMovie] = useMutation(UPDATE_MOVIE);
+  const [updateMovie] = useMutation(UPDATE_MOVIE, { refetchQueries: [{ query: GET_MOVIES }]});
   const { loading, error, data } = useQuery(GET_MOVIE, { variables: { id }});
   const [input, setInput] = useState({
     title: '',

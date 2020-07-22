@@ -49,7 +49,7 @@ const resolvers = {
         return JSON.parse(tvSeries);
       } else {
         try {
-          const { data } = await axios.get('http://localhost:3002/tv');
+          const { data } = await axios.get('http://54.179.152.166:3002/tv');
           redis.set('tvSeries', JSON.stringify(data));
           return data;
         } catch (error) {
@@ -60,7 +60,7 @@ const resolvers = {
     getTvSerie : (parent, args, context, info) => {
       const id = args.id
       return axios({
-        url : `http://localhost:3002/tv/${id}`,
+        url : `http://54.179.152.166:3002/tv/${id}`,
         method : "get"
       })
       .then(({data}) => {
@@ -73,7 +73,7 @@ const resolvers = {
   Mutation: {
     addTvSerie : (parent, args, context, info) => {
       const { title, overview, poster_path, popularity, tags } = args.newTvSerie;
-      return axios.post(`http://localhost:3002/tv`, { 
+      return axios.post(`http://54.179.152.166:3002/tv`, { 
         title, overview, poster_path, popularity, tags
       })
       .then(({ data }) => {
@@ -86,7 +86,7 @@ const resolvers = {
     updateTvSerie : (parent, args, context, info) => {
       const id = args.id
       const { title, overview, poster_path, popularity, tags } = args.newTvSerie;
-      return axios.put(`http://localhost:3002/tv/${id}`, { 
+      return axios.put(`http://54.179.152.166:3002/tv/${id}`, { 
         title, overview, poster_path, popularity, tags
       })
       .then(({ data }) => {
@@ -98,7 +98,7 @@ const resolvers = {
 
     deleteTvSerie : (parent, args, context, info) => {
       const id = args.id;
-      return axios.delete(`http://localhost:3002/tv/${id}`)
+      return axios.delete(`http://54.179.152.166:3002/tv/${id}`)
       .then(({ data }) => {
         redis.del('tvSeries');
         return data.message;

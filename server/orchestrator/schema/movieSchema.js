@@ -49,7 +49,7 @@ const resolvers = {
         return JSON.parse(movies);
       } else {
         try {
-          const { data } = await axios.get('http://localhost:3001/movies');
+          const { data } = await axios.get('http://54.179.152.166:3001/movies');
           redis.set('movies', JSON.stringify(data));
           return data;
         } catch (error) {
@@ -60,7 +60,7 @@ const resolvers = {
     getMovie : (parent, args, context, info) => {
       const id = args.id
       return axios({
-        url : `http://localhost:3001/movies/${id}`,
+        url : `http://54.179.152.166:3001/movies/${id}`,
         method : "get"
       })
       .then(({data}) => {
@@ -73,7 +73,7 @@ const resolvers = {
   Mutation: {
     addMovie : (parent, args, context, info) => {
       const { title, overview, poster_path, popularity, tags } = args.newMovie;
-      return axios.post(`http://localhost:3001/movies`, { 
+      return axios.post(`http://54.179.152.166:3001/movies`, { 
         title, overview, poster_path, popularity, tags
       })
       .then(({ data }) => {
@@ -86,7 +86,7 @@ const resolvers = {
     updateMovie : (parent, args, context, info) => {
       const id = args.id
       const { title, overview, poster_path, popularity, tags } = args.newMovie;
-      return axios.put(`http://localhost:3001/movies/${id}`, { 
+      return axios.put(`http://54.179.152.166:3001/movies/${id}`, { 
         title, overview, poster_path, popularity, tags
       })
       .then(({ data }) => {
@@ -98,7 +98,7 @@ const resolvers = {
 
     deleteMovie : (parent, args, context, info) => {
       const id = args.id;
-      return axios.delete(`http://localhost:3001/movies/${id}`)
+      return axios.delete(`http://54.179.152.166:3001/movies/${id}`)
       .then(({ data }) => {
         redis.del('movies');
         return data.message;

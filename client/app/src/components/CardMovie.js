@@ -1,13 +1,13 @@
 import React, { useState,useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
-import { DELETE_MOVIE } from '../graphql/queries/movie';
+import { DELETE_MOVIE, GET_MOVIES } from '../graphql/queries/movie';
 import { GET_FAVORITES, fav } from '../graphql/queries/favorite';
 
 function CardMovie (props) {
   const [checkFav, setCheckFav] = useState(true);
   const history = useHistory();
-  const [deleteMovie] = useMutation(DELETE_MOVIE);
+  const [deleteMovie] = useMutation(DELETE_MOVIE, { refetchQueries: [{ query: GET_MOVIES }]});
   const { loading, data } = useQuery(GET_FAVORITES);
   if (loading) {
     return (

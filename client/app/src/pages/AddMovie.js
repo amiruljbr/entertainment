@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { ADD_MOVIE } from '../graphql/queries/movie';
+import { ADD_MOVIE, GET_MOVIES } from '../graphql/queries/movie';
 import { useHistory } from 'react-router-dom';
 
 export default function AddMoviePage () {
   const history = useHistory();
-  const [addMovie] = useMutation(ADD_MOVIE);
+  const [addMovie] = useMutation(ADD_MOVIE, { refetchQueries: [{ query: GET_MOVIES }]});
   const [input, setInput] = useState({
     title: '',
     overview: '',

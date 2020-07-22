@@ -1,6 +1,7 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_TVSERIES } from '../graphql/queries/tvSerie'
+import CardTvSerie from '../components/CardTvSerie';
 
 export default function TvSeries() {
   const { loading, error, data: tvSeries } = useQuery(GET_TVSERIES)
@@ -14,14 +15,13 @@ export default function TvSeries() {
   return (
     <div className="container">
       <h1>All TV Series</h1>
-      {JSON.stringify(tvSeries)}
-      {/* <div className="card-columns">
-        {books.map((book)=>{
+      <div className="card-columns">
+        {tvSeries.getTvSeries.map((tvSerie)=>{
           return (
-            <CardBook key={book.id} book={book} showButton={true}></CardBook>
+            <CardTvSerie key={tvSerie._id} tvSerie={tvSerie}></CardTvSerie>
           )
         })}
-      </div> */}
+      </div>
     </div>
   )
 }

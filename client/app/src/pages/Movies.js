@@ -15,11 +15,10 @@ export default function Movies() {
   return (
     <div className="container">
       <h1>All Movies</h1>
-      {/* {JSON.stringify(movies.getMovies)} */}
       <div className="card-columns">
         {movies.getMovies.map((movie)=>{
           return (
-            <CardMovie key={movie._id} movie={movie} showButton={true}></CardMovie>
+            <CardMovie key={movie._id} movie={movie}></CardMovie>
           )
         })}
       </div>

@@ -1,25 +1,37 @@
 import React, { useEffect } from 'react'
-// import { useDispatch, useSelector } from 'react-redux';
-// // import { getBooks } from '../store/actions/bookAction.js';
-// import CardBook from '../components/CardBook.js';
+import { useQuery } from '@apollo/client';
+import { GET_TVSERIES } from '../graphql/queries/tvSerie'
+import { GET_MOVIES } from '../graphql/queries/movie'
+import CardTvSerie from '../components/CardTvSerie';
+
 
 export default function Home() {
-  // const dispatch = useDispatch();
-  // const books = useSelector(state => state.bookReducer.books);
+  const { loading: loadingTv, error: errorTv, data: tvSeries } = useQuery(GET_TVSERIES)
+  const { loading: loadingMovie, error: errorMovie , data: movies } = useQuery(GET_MOVIES)
 
-  // useEffect(() => {
-  //   dispatch(getBooks())
-  // }, [dispatch])
+  if (loadingTv || loadingMovie) {
+    return (
+      <div>
+        Loading ...
+      </div>
+    );
+  };
 
   return (
     <div className="container">
-      <h1>Halaman Home</h1>
+      <h1>Home</h1>
       <div className="card-columns">
-        {/* {books.map((book)=>{
+        {movies.getMovies.map((tvSerie)=>{
           return (
-            <CardBook key={book.id} book={book} showButton={true}></CardBook>
+            <CardTvSerie key={tvSerie._id} tvSerie={tvSerie}></CardTvSerie>
           )
-        })} */}
+        })}
+
+        {tvSeries.getTvSeries.map((tvSerie)=>{
+          return (
+            <CardTvSerie key={tvSerie._id} tvSerie={tvSerie}></CardTvSerie>
+          )
+        })}
       </div>
     </div>
   )

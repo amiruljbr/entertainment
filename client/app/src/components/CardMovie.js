@@ -1,13 +1,21 @@
 import React, { useState,useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { DELETE_MOVIE } from '../graphql/queries/movie';
+import { GET_FAVORITES, fav } from '../graphql/queries/favorite';
 
 function CardMovie (props) {
   const [checkFav, setCheckFav] = useState(true);
   const history = useHistory();
   const [deleteMovie] = useMutation(DELETE_MOVIE);
-
+  const { loading, data } = useQuery(GET_FAVORITES);
+  if (loading) {
+    return (
+      <div>
+        Loading ...
+      </div>
+    );
+  };
   // useEffect(() => {
   //   let found = favorites.findIndex(movie => {
   //       return movie.CountryCode === props.movie.CountryCode;
@@ -33,6 +41,8 @@ function CardMovie (props) {
 
   function addToFavorites(movie) {
     console.log(`add ${movie.title} to favorites`);
+    let favorites = data.favorites;
+    fav([...favorites, movie])
   }
 
   function removeFromFavorites(movie) {

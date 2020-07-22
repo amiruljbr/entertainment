@@ -1,10 +1,10 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
-import { GET_MOVIES } from '../graphql/queries/movie'
+import { GET_FAVORITES } from '../graphql/queries/favorite'
 import CardMovie from '../components/CardMovie'
 
 export default function Favorites() {
-  const { loading, error, data: movies } = useQuery(GET_MOVIES)
+  const { loading, error, data: movies } = useQuery(GET_FAVORITES)
   if (loading) {
     return (
       <div>
@@ -15,9 +15,8 @@ export default function Favorites() {
   return (
     <div className="container">
       <h1>List Favorites: </h1>
-      {/* {JSON.stringify(movies.getMovies)} */}
       <div className="card-columns">
-        {movies.getMovies.map((movie)=>{
+        {movies.favorites.map((movie)=>{
           return (
             <CardMovie key={movie._id} movie={movie} showButton={true}></CardMovie>
           )

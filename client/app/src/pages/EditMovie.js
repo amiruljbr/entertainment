@@ -55,7 +55,6 @@ export default function EditMovie () {
   return (
     <div className="container">
       <h1>Edit Movie</h1>
-      {JSON.stringify(data)}
       <form onSubmit={onSubmit}>
         <div className="form-group">
           <label>title:</label>
